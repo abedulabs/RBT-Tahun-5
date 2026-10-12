@@ -1,25 +1,22 @@
-BANDAR HIJAU 3D — RBT TAHUN 5 (PdPR)
+BANDAR HIJAU 3D — RBT TAHUN 5
+Versi prototaip interaktif untuk telefon dan komputer.
 
-Kandungan ZIP:
-- index.html: simulator web responsif, boleh dibuka pada telefon dan komputer.
+Ciri:
+- Katalog item dengan tab Semua, Tanaman, Struktur dan Alatan.
+- Aset isometrik SVG yang dilukis menggunakan muka atas dan sisi 3D.
+- Letak item dengan ketik pada tapak.
+- Seret item untuk alih; pilih, putar, salin dan padam.
+- Putar kamera, zum masuk/keluar, mod binaan dan mod pandangan.
+- Simpan pada peranti, eksport/import fail JSON, cetak/simpan PDF.
+- Misi reka bentuk dan skor pencapaian.
+- Mesra skrin telefon.
 
-Cara guna:
+GitHub Pages:
 1. Ekstrak ZIP.
-2. Buka index.html untuk menguji simulator.
-3. Untuk GitHub Pages, muat naik index.html ke root repository.
-4. Buka Settings > Pages.
-5. Pilih Deploy from a branch, branch main, folder /(root), kemudian Save.
-6. Buka URL GitHub Pages yang diberikan.
-
-Aktiviti murid:
-- Pilih objek di panel.
-- Ketik tapak kebun untuk meletakkan objek.
-- Pilih jenis tanaman.
-- Lengkapkan misi reka bentuk dan isi penerangan.
-- Simpan reka bentuk sebagai fail JSON dan gunakan Cetak / Simpan PDF atau tangkap layar.
-- Hantar fail, tangkap layar dan penerangan melalui Google Classroom.
+2. Muat naik index.html ke root repository GitHub.
+3. Settings > Pages > Deploy from a branch > main > /(root) > Save.
+4. Buka URL Pages yang dijana.
 
 Nota:
-- Simulator ini ialah model reka bentuk 3D bergaya isometrik (bukan enjin 3D realistik).
-- Data disimpan pada peranti murid melalui fail muat turun; tiada akaun, pelayan atau pangkalan data.
-- Murid perlu menghantar bukti kepada guru; skor tidak dihantar secara automatik kepada guru.
+Ini prototaip isometrik 2.5D menggunakan aset SVG buatan sendiri, bukan enjin 3D sebenar/WebGL. Ia menyokong susun atur dan manipulasi objek pada tapak.
+Reka bentuk tidak dihantar automatik ke guru; murid eksport JSON atau cetak/simpan PDF dan hantar ke Google Classroom.
