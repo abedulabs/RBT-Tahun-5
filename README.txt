@@ -1,5 +1,5 @@
-BANDAR HIJAU 3D — LAYER & CHECKBOX FIX
-- Object layer raised above the deck; newly added and selected objects use high z-index so they remain visible in front of the platform.
-- Platform no longer captures pointer interaction.
-- Checkbox-to-statement gap reduced to 3px and vertical row spacing reduced.
-- Previous drag fix, tabs, isometric fence and existing simulator controls retained.
+BANDAR HIJAU 3D — GRID ALIGNMENT UPDATE
+- Item captions/labels below objects hidden/removed.
+- Fence and electric-wire fence default to 30-degree grid-aligned angle.
+- Rotate button now turns selected items in 30-degree increments to better match the isometric grid.
+- Existing drag, tabs, save/import/export, irrigation, and other controls retained.
