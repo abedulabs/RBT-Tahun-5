@@ -56,7 +56,7 @@ header{background:linear-gradient(120deg,#075b2c,#0a9148);color:white;padding:16
 .placed{position:absolute;width:96px;height:84px;left:50%;top:50%;transform:translate(-50%,-50%) translateZ(1px);transform-style:flat;pointer-events:auto;touch-action:none;cursor:grab;user-select:none;filter:drop-shadow(2px 5px 2px #1b352522);z-index:101;overflow:visible}
 .placed.selected{outline:3px dashed #f59e0b;outline-offset:3px;filter:drop-shadow(0 0 5px #f59e0b);z-index:9999}
 .placed svg{width:100%;height:100%;overflow:visible;display:block;pointer-events:none;position:relative;z-index:1}
-.objlabel{display:none!important}
+.objlabel{display:none!important;visibility:hidden!important;opacity:0!important}
 .empty{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);z-index:4;background:#ffffffdc;border:1px solid #fff;border-radius:12px;padding:12px;text-align:center;font-size:13px;width:min(80%,300px);pointer-events:none}
 .stagefoot{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}.metric{flex:1;min-width:90px;padding:8px 10px;background:#f1f8ed;border:1px solid #d8e7d0;border-radius:10px;font-size:12px}.metric b{display:block;color:#166534;font-size:18px}
 .bottomgrid{display:grid;grid-template-columns:1fr 1fr;gap:10px;order:3}.bottompanel{padding:12px}.bottompanel h3{font-size:15px;margin:0 0 8px}.checks{display:grid;gap:7px}.checks label{font-size:13px;display:flex;gap:7px;align-items:flex-start}.checks input{margin-top:3px}.bottompanel input:not([type=checkbox]),.bottompanel textarea{width:100%;border:1px solid #cbd5e1;border-radius:9px;padding:9px;margin:4px 0 8px}.bottompanel textarea{min-height:65px;resize:vertical}.checks{display:grid;gap:4px}.checks label{display:flex;gap:3px;align-items:flex-start;font-size:13px;line-height:1.35;padding:1px 0}.checks input[type=checkbox]{appearance:auto;-webkit-appearance:checkbox;width:17px;min-width:17px;height:17px;flex:0 0 17px;margin:1px 0 0;padding:0}
@@ -82,6 +82,7 @@ footer{text-align:center;padding:12px;color:#617367;font-size:11px}
 #instructions{font-size:13px;line-height:1.4;flex:1 1 100%;padding:4px 2px;color:#51665a}
 @media(max-width:430px){.task-shell{padding:8px}.task-tabs{gap:5px}.task-tab{font-size:11px;padding:10px 5px}.stagehead h2{font-size:18px}.stagefoot{gap:6px}.stagefoot .btn{font-size:12px;padding:9px 10px}}
 
+.placed .objlabel,.objlabel{display:none!important;visibility:hidden!important;opacity:0!important;width:0!important;height:0!important;overflow:hidden!important}
 </style>
 </head>
 <body>
@@ -230,17 +231,24 @@ function createArt(id,emoji){
  }else if(id==='irrigation'){
    line(g,25,39,96,39,'#4c9bc7',6);line(g,25,39,25,69,'#4c9bc7',5);line(g,96,39,96,69,'#4c9bc7',5);line(g,25,69,96,69,'#4c9bc7',5);[38,55,72,88].forEach(x=>{line(g,x,39,x,49,'#3b82a0',2);ellipse(g,x,52,3,5,'#38bdf8')});rect(g,46,59,29,18,'#d1d5db','#64748b',3);textSVG(g,60,68,'⚙️',11);
  }else if(id==='fence'){
-   // One isometric fence panel: slanted top rail and repeated upright pickets.
-   polygon(g,'10,32 20,27 112,63 102,69','#c49a6c','#8b633f',1);
-   line(g,12,25,104,61,'#9b7049',4);line(g,12,34,104,70,'#8b633f',4);
-   for(let i=0;i<9;i++){let x=14+i*10,y=25+i*4;polygon(g,`${x},${y} ${x+4},${y-2} ${x+7},${y+25} ${x+3},${y+27}`,'#b58a5b','#80552f',1);}
+   // Grid-aligned isometric fence panel: rails follow the garden grid; posts stand at both ends.
+   polygon(g,'10,29 18,24 110,76 102,81','#c49a6c','#8b633f',1);
+   // Two end posts, kept vertical so adjacent panels can connect neatly.
+   polygon(g,'9,13 14,10 18,53 13,56','#d0a77c','#80552f',1);
+   polygon(g,'102,59 108,56 112,94 106,97','#d0a77c','#80552f',1);
+   line(g,13,27,107,80,'#9b7049',4);
+   line(g,15,36,106,87,'#8b633f',3);
+   for(let i=0;i<10;i++){let x=17+i*9.1,y=29+i*5.1;polygon(g,`${x},${y-3} ${x+3},${y-5} ${x+5},${y+21} ${x+2},${y+23}`,'#b58a5b','#80552f',1);}
  }else if(id==='fencewire'){
-   // Isometric wire-mesh panel with diagonal perspective and sturdy posts.
-   polygon(g,'10,32 20,27 112,63 102,69','#b8c9c6','#607d79',1);
-   line(g,12,20,12,61,'#536f6b',5);line(g,104,56,104,82,'#536f6b',5);
-   line(g,12,25,104,61,'#d1a33b',2.5);line(g,12,36,104,72,'#d1a33b',2.5);line(g,12,47,104,81,'#d1a33b',2.5);
-   for(let i=0;i<12;i++){let x=16+i*7.4,y=25+i*2.9;line(g,x,y,x-3,y+28,'#90aaa5',1);line(g,x,y+6,x+3,y-1,'#90aaa5',1);}
-   textSVG(g,61,24,'⚡',12);
+   // Wire mesh fence panel follows the same grid axis with upright end poles.
+   polygon(g,'10,29 18,24 110,76 102,81','#b8c9c6','#607d79',1);
+   polygon(g,'9,13 14,10 18,53 13,56','#668681','#355a56',1);
+   polygon(g,'102,59 108,56 112,94 106,97','#668681','#355a56',1);
+   line(g,13,27,107,80,'#d1a33b',2.5);
+   line(g,15,36,106,87,'#d1a33b',2.5);
+   line(g,17,45,105,94,'#d1a33b',2);
+   for(let i=0;i<14;i++){let x=17+i*6.4,y=29+i*3.5;line(g,x,y,x-3,y+22,'#90aaa5',1);line(g,x+3,y+2,x,y+24,'#90aaa5',1);}
+   textSVG(g,60,42,'⚡',11);
  }else if(id==='path'){
    for(let r=0;r<3;r++)for(let c=0;c<3;c++){let x=24+c*24-r*2,y=38+r*12+c*5;polygon(g,`${x},${y} ${x+16},${y-8} ${x+32},${y} ${x+16},${y+8}`,'#d6d3d1','#9ca3af',1)}
  }else if(id==='bench'){
@@ -260,7 +268,7 @@ function restoreState(d){restoring=true;items.forEach(o=>o.el.remove());items=[]
 function undoAction(){if(!history.length)return toast('Tiada tindakan untuk undo.');future.push(JSON.stringify(stateData()));const d=JSON.parse(history.pop());restoreState(d);toast('Tindakan dibatalkan.');}
 function redoAction(){if(!future.length)return toast('Tiada tindakan untuk redo.');history.push(JSON.stringify(stateData()));const d=JSON.parse(future.pop());restoreState(d);toast('Tindakan dipulihkan.');}
 function toast(msg){const t=document.getElementById('toast');t.textContent=msg;t.style.display='block';clearTimeout(window._toast);window._toast=setTimeout(()=>t.style.display='none',2200)}
-function addItem(id,x=50,y=50,rot=null){if(!restoring)snapshot();if(rot===null)rot=(id==='fence'||id==='fencewire')?30:0;const data=itemInfo(id),el=document.createElement('div');el.className='placed';el.dataset.id=id;el.dataset.x=x;el.dataset.y=y;el.dataset.rot=rot;el.style.left=x+'%';el.style.top=y+'%';el.style.rotate=rot+'deg';const art=createArt(id,data.emoji);el.appendChild(art);layer.appendChild(el);const obj={el,id,x,y,rot,mirror:false};items.push(obj);el.style.zIndex=String(200+items.length);items.forEach((it,i)=>{if(it!==selected)it.el.style.zIndex=String(200+i)});el.addEventListener('pointerdown',e=>startDrag(e,obj));el.addEventListener('click',e=>{e.stopPropagation();if(!dragMoved)selectItem(obj)});el.addEventListener('contextmenu',e=>{e.preventDefault();selectItem(obj)});selectItem(obj);document.getElementById('empty').style.display='none';updateStats();return obj}
+function addItem(id,x=50,y=50,rot=null){if(!restoring)snapshot();if(rot===null)rot=0;const data=itemInfo(id),el=document.createElement('div');el.className='placed';el.dataset.id=id;el.dataset.x=x;el.dataset.y=y;el.dataset.rot=rot;el.style.left=x+'%';el.style.top=y+'%';el.style.rotate=rot+'deg';const art=createArt(id,data.emoji);el.appendChild(art);layer.appendChild(el);const obj={el,id,x,y,rot,mirror:false};items.push(obj);el.style.zIndex=String(200+items.length);items.forEach((it,i)=>{if(it!==selected)it.el.style.zIndex=String(200+i)});el.addEventListener('pointerdown',e=>startDrag(e,obj));el.addEventListener('click',e=>{e.stopPropagation();if(!dragMoved)selectItem(obj)});el.addEventListener('contextmenu',e=>{e.preventDefault();selectItem(obj)});selectItem(obj);document.getElementById('empty').style.display='none';updateStats();return obj}
 function startDrag(e,obj){
  if(e.button!==undefined && e.button!==0)return;
  e.preventDefault();e.stopPropagation();
@@ -274,12 +282,12 @@ function startDrag(e,obj){
  try{obj.el.setPointerCapture(e.pointerId)}catch(err){}
 }
 function selectItem(obj){if(selected){selected.el.classList.remove('selected');selected.el.style.zIndex=String(200+Math.max(0,items.indexOf(selected)))}selected=obj;if(obj){obj.el.classList.add('selected');obj.el.style.zIndex='9999';document.getElementById('instructions').textContent='Dipilih: '+itemInfo(obj.id).name+' · Gunakan Alih, Putar, Salin atau Padam.'}}
-function placeFromStage(e){if(viewMode)return;const r=stage.getBoundingClientRect();let x=Math.max(8,Math.min(92,(e.clientX-r.left)/r.width*100)),y=Math.max(10,Math.min(90,(e.clientY-r.top)/r.height*100));const worldRect=world.getBoundingClientRect();x=Math.max(12,Math.min(88,(e.clientX-worldRect.left)/worldRect.width*100));y=Math.max(12,Math.min(88,(e.clientY-worldRect.top)/worldRect.height*100));addItem(activeItem,x,y,(activeItem==='fence'||activeItem==='fencewire')?30:0)}
+function placeFromStage(e){if(viewMode)return;const r=stage.getBoundingClientRect();let x=Math.max(8,Math.min(92,(e.clientX-r.left)/r.width*100)),y=Math.max(10,Math.min(90,(e.clientY-r.top)/r.height*100));const worldRect=world.getBoundingClientRect();x=Math.max(12,Math.min(88,(e.clientX-worldRect.left)/worldRect.width*100));y=Math.max(12,Math.min(88,(e.clientY-worldRect.top)/worldRect.height*100));addItem(activeItem,x,y,0)}
 stage.addEventListener('pointerdown',e=>{if(e.target.closest('.placed'))return;if(e.target.closest('button'))return;if(panMode||viewMode){drag={camera:true,pan:true,x:e.clientX,y:e.clientY,panX,panY,rot:camRot};stage.setPointerCapture?.(e.pointerId);return;}if(!viewMode){placeFromStage(e)}});
 stage.addEventListener('pointermove',e=>{if(!drag)return;if(drag.camera){const dx=e.clientX-drag.x,dy=e.clientY-drag.y;if(drag.pan){panX=drag.panX+dx;panY=drag.panY+dy;applyViewport();}else{camRot=(drag.rot+dx*.5)%360;applyViewport();}return}if(drag.obj){const dx=e.clientX-drag.startX,dy=e.clientY-drag.startY;if(Math.abs(dx)+Math.abs(dy)>4)dragMoved=true;const r=world.getBoundingClientRect();let x=Math.max(12,Math.min(88,drag.x+dx/r.width*100)),y=Math.max(12,Math.min(88,drag.y+dy/r.height*100));drag.obj.x=x;drag.obj.y=y;drag.obj.el.style.left=x+'%';drag.obj.el.style.top=y+'%';drag.obj.el.dataset.x=x;drag.obj.el.dataset.y=y;}});
 stage.addEventListener('pointerup',()=>{if(drag&&drag.obj&&dragMoved)updateStats();drag=null;setTimeout(()=>dragMoved=false,60)});
 stage.addEventListener('pointercancel',()=>drag=null);
-document.getElementById('rotateObj').addEventListener('click',()=>{if(!selected)return toast('Pilih objek dahulu.');snapshot();selected.rot=(selected.rot+30)%360;selected.el.dataset.rot=selected.rot;selected.el.style.rotate=selected.rot+'deg';toast('Objek diputar 30° mengikut arah grid.')});
+document.getElementById('rotateObj').addEventListener('click',()=>{if(!selected)return toast('Pilih objek dahulu.');snapshot();selected.rot=(selected.rot+45)%360;selected.el.dataset.rot=selected.rot;selected.el.style.rotate=selected.rot+'deg';toast('Objek diputar 45° mengikut arah grid.')});
 document.getElementById('mirrorObj').addEventListener('click',()=>{if(!selected)return toast('Pilih objek dahulu.');snapshot();selected.mirror=!selected.mirror;const svg=selected.el.querySelector('svg');svg.style.transform=selected.mirror?'scaleX(-1)':'scaleX(1)';selected.el.dataset.mirror=selected.mirror?'1':'0';toast(selected.mirror?'Objek dipantulkan kiri/kanan.':'Pantulan dibatalkan.')});
 document.getElementById('moveObj').addEventListener('click',()=>{if(!selected)return toast('Pilih objek dahulu.');moveMode=!moveMode;document.getElementById('moveObj').classList.toggle('amber',moveMode);document.getElementById('instructions').textContent=moveMode?'Mod alih aktif: seret objek yang dipilih ke lokasi baharu.':'Dipilih: '+itemInfo(selected.id).name+' · Gunakan Alih, Putar, Salin atau Padam.';toast(moveMode?'Mod alih aktif. Seret objek yang dipilih.':'Mod alih selesai.')});
 document.getElementById('duplicate').addEventListener('click',()=>{if(!selected)return toast('Pilih objek dahulu.');snapshot();const copy=addItem(selected.id,Math.min(86,selected.x+7),Math.min(86,selected.y+6),selected.rot);if(selected.mirror){copy.mirror=true;copy.el.querySelector('svg').style.transform='scaleX(-1)';copy.el.dataset.mirror='1'}toast('Objek disalin.')});
