@@ -1,12 +1,22 @@
-BANDAR HIJAU 3D — V3 BACKYARD + IRRIGATION
-Penambahbaikan:
-- Pagar isometrik lurus dan aset tambahan Pagar Dawai Elektrik.
-- Tapak lebih besar; item yang diletakkan sedikit lebih kecil.
-- Rumput hijau dengan grid dan latar belakang halaman rumah bandar serta pokok pine.
-- Zoom in/out, putar kamera, dan Gerak Tapak (pan) melalui seretan ruang kosong.
-- Padam objek dipilih, Undo dan Redo.
-- Butang Sistem Pengairan Automatik: animasi gerakan tumbuhan dan ikon air/hasil untuk simulasi pembelajaran.
-- Fungsi lama, medal, simpan/eksport/import dan tugasan dikekalkan.
+BANDAR HIJAU 3D — RBT TAHUN 5
+Versi prototaip interaktif untuk telefon dan komputer.
 
-Pasang: gantikan index.html pada repository GitHub Pages dengan fail dalam ZIP.
-Nota: simulasi grafik isometrik 2.5D SVG, bukan enjin 3D WebGL. Pengairan ialah animasi pendidikan, bukan simulasi biologi saintifik penuh.
+Ciri:
+- Katalog item dengan tab Semua, Tanaman, Struktur dan Alatan.
+- Aset isometrik SVG yang dilukis menggunakan muka atas dan sisi 3D.
+- Letak item dengan ketik pada tapak.
+- Seret item untuk alih; pilih, putar, salin dan padam.
+- Putar kamera, zum masuk/keluar, mod binaan dan mod pandangan.
+- Simpan pada peranti, eksport/import fail JSON, cetak/simpan PDF.
+- Misi reka bentuk dan skor pencapaian.
+- Mesra skrin telefon.
+
+GitHub Pages:
+1. Ekstrak ZIP.
+2. Muat naik index.html ke root repository GitHub.
+3. Settings > Pages > Deploy from a branch > main > /(root) > Save.
+4. Buka URL Pages yang dijana.
+
+Nota:
+Ini prototaip isometrik 2.5D menggunakan aset SVG buatan sendiri, bukan enjin 3D sebenar/WebGL. Ia menyokong susun atur dan manipulasi objek pada tapak.
+Reka bentuk tidak dihantar automatik ke guru; murid eksport JSON atau cetak/simpan PDF dan hantar ke Google Classroom.
