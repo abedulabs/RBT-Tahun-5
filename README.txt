@@ -1,12 +1,12 @@
-BANDAR HIJAU 3D — FIX TAPAK & PAGAR
-Perubahan:
-- Tapak diperkecil sedikit dan dipusatkan supaya lebih banyak ruang visual untuk keseluruhan objek.
-- Susunan lapisan dibetulkan supaya objek berada di atas permukaan tapak dan tidak dilitupi papan.
-- Saiz objek dan ruang limpahan dipertingkat; kedudukan semasa seret dihadkan supaya objek tidak mudah terkeluar dari kawasan.
-- Pagar dilukis sebagai segmen lurus. Letakkan beberapa segmen dalam satu baris dan putar setiap segmen untuk membuat penjuru.
-- Butang Pantul kiri/kanan ditambah untuk mencerminkan item yang dipilih.
-- Simpan/import JSON mengekalkan keadaan pantulan.
-- Fungsi lama dikekalkan: katalog, tambah item, alih, putar, salin, padam, zoom, mod kamera, misi, medal, eksport projek dan cetak.
+BANDAR HIJAU 3D — UI FIX V2
+Kemaskini:
+1. Lapisan aset dipaksa berada di hadapan tapak supaya tumbuhan/struktur tidak dilitupi permukaan.
+2. Tapak dikecilkan/dipusatkan dan ruang paparan telefon ditambah.
+3. Ruang soalan dibaiki: kotak tick kekal kecil dan teks berada rapat di sebelahnya.
+4. Ikon ditambah untuk setiap pernyataan misi.
+5. Nota ringkas tentang reka bentuk pertanian bandar ditambah dengan tulisan kecil.
+6. Navigasi pantas: Tapak kebun, Pilih aset, Tugasan & medal.
+7. Fungsi simulator dan sistem medal sedia ada dikekalkan.
 
-Muat naik index.html yang baharu ke repository GitHub Pages dengan menggantikan fail lama.
-Nota: Paparan ialah aset SVG isometrik/2.5D, bukan geometri 3D WebGL sebenar.
+Pemasangan: gantikan index.html dalam repository GitHub Pages dengan fail ini. Refresh laman selepas deployment.
+Nota: model ini menggunakan aset SVG isometrik 2.5D; ia bukan enjin 3D WebGL.
