@@ -1,0 +1,172 @@
+<!doctype html>
+<html lang="ms">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<meta name="theme-color" content="#166534">
+<title>Bandar Hijau 3D | RBT Tahun 5</title>
+<style>
+:root{--green:#166534;--lime:#a3e635;--cream:#f7f7ed;--ink:#173323;--panel:#fff;--muted:#64748b}
+*{box-sizing:border-box}body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;background:#eef5e8;color:var(--ink)}
+header{padding:14px 16px;background:linear-gradient(120deg,#14532d,#15803d);color:#fff}
+header h1{font-size:clamp(20px,4vw,30px);margin:0 0 4px}header p{margin:0;font-size:14px;opacity:.92}
+main{max-width:1200px;margin:auto;padding:12px;display:grid;grid-template-columns:300px 1fr;gap:12px}
+.panel{background:#fff;border:1px solid #d8e7d0;border-radius:16px;padding:14px;box-shadow:0 4px 14px #163b1a0d}
+h2{font-size:17px;margin:0 0 10px}.sub{font-size:13px;color:var(--muted);line-height:1.45}
+.tools{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:10px 0}
+.tool{border:1px solid #d4e5ce;background:#f7fbf4;border-radius:12px;padding:10px 6px;text-align:center;min-height:82px;color:var(--ink);font-weight:700;cursor:pointer}
+.tool .emoji{display:block;font-size:27px;margin-bottom:3px}.tool small{display:block;font-size:11px;font-weight:500;color:#56705a}
+.tool.active{outline:3px solid #84cc16;background:#ecfccb;border-color:#65a30d}
+button{font:inherit;touch-action:manipulation}
+.actions{display:flex;flex-wrap:wrap;gap:7px;margin-top:10px}
+.action{border:0;border-radius:10px;padding:10px 12px;font-weight:700;background:#166534;color:#fff;cursor:pointer}
+.action.secondary{background:#e2e8f0;color:#203329}.action.warn{background:#b45309}
+.workspace{min-width:0}
+.scenehead{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:8px}
+.scenehead h2{margin:0}.pill{background:#ecfccb;color:#365314;padding:5px 9px;border-radius:99px;font-size:12px;font-weight:700}
+.viewport{position:relative;overflow:hidden;min-height:470px;border-radius:16px;background:linear-gradient(#dff3ff 0 44%,#d8e8cb 44%);border:1px solid #c7d8bf;touch-action:pan-y}
+.sun{position:absolute;right:8%;top:6%;font-size:35px;filter:drop-shadow(0 3px 4px #9b8b48)}
+.cloud{position:absolute;left:9%;top:9%;font-size:35px;opacity:.65}
+.ground{position:absolute;left:50%;top:53%;width:min(78%,610px);height:min(62vw,390px);min-height:270px;transform:translate(-50%,-50%) rotateX(55deg) rotateZ(45deg);transform-style:preserve-3d;background:#c5d8ae;border:10px solid #789b67;box-shadow:0 20px 0 #4d7250,0 25px 24px #315b3730;border-radius:8px}
+.ground:before{content:"";position:absolute;inset:0;background-image:linear-gradient(#ffffff24 1px,transparent 1px),linear-gradient(90deg,#ffffff24 1px,transparent 1px);background-size:10% 10%;pointer-events:none}
+.garden-object{position:absolute;transform:translate(-50%,-50%) rotateZ(-45deg) rotateX(-55deg);transform-style:preserve-3d;cursor:pointer;user-select:none;touch-action:manipulation;filter:drop-shadow(2px 4px 2px #0002)}
+.garden-object.selected{outline:3px dashed #f59e0b;outline-offset:4px}
+.bed{width:84px;height:58px;background:#8b5a35;border:5px solid #b77a4a;border-radius:4px;box-shadow:0 7px 0 #6d4328;display:flex;align-items:center;justify-content:center}
+.bed:before{content:"";position:absolute;inset:4px;background:#3d2d1b;border-radius:2px}
+.plant{position:relative;z-index:1;font-size:25px;filter:drop-shadow(0 2px 1px #172b12)}
+.pot{width:42px;height:46px;display:flex;align-items:flex-start;justify-content:center;font-size:30px}
+.hydro{width:102px;height:48px;background:#dbeafe;border:5px solid #94a3b8;border-radius:6px;box-shadow:0 6px 0 #64748b;display:flex;align-items:center;justify-content:space-around}
+.hydro span{background:#f8fafc;border-radius:50%;width:13px;height:13px;border:2px solid #64748b}
+.greenhouse{width:94px;height:70px;border:5px solid #64748b;background:#dbeafe99;box-shadow:0 6px 0 #475569;display:flex;align-items:center;justify-content:center;font-size:28px}
+.rack{width:80px;height:72px;display:flex;flex-direction:column;justify-content:space-around;padding:4px;background:#9a633e;border:4px solid #714326;box-shadow:0 6px 0 #60391f}
+.rack span{height:15px;background:#3d2d1b;border:2px solid #bd8b60;text-align:center;font-size:12px;line-height:11px}
+.path{width:88px;height:24px;background:#d6d3d1;border:3px solid #a8a29e;box-shadow:0 4px 0 #78716c}
+.object-label{position:absolute;top:100%;left:50%;transform:translateX(-50%);white-space:nowrap;font-size:10px;background:#fff;color:#334155;padding:2px 5px;border-radius:5px;opacity:.9}
+.emptyhint{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);background:#ffffffdd;border-radius:12px;padding:12px;text-align:center;width:75%;font-size:14px;pointer-events:none}
+.status{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}.stat{background:#f1f8ed;border:1px solid #d8e7d0;padding:8px 10px;border-radius:10px;font-size:13px;flex:1;min-width:100px}
+.stat b{display:block;font-size:18px;color:#166534}
+.bottomgrid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:12px}
+textarea,input{width:100%;border:1px solid #cbd5e1;border-radius:10px;padding:10px;font:inherit;background:#fff}
+textarea{min-height:80px;resize:vertical}
+.checks{display:grid;gap:8px}.checks label{display:flex;gap:8px;align-items:flex-start;font-size:14px}.checks input{width:auto;margin-top:4px}
+.toast{position:fixed;bottom:18px;left:50%;transform:translateX(-50%);background:#173323;color:#fff;padding:10px 15px;border-radius:999px;box-shadow:0 6px 24px #0003;z-index:10;font-size:13px;display:none;max-width:90%;text-align:center}
+footer{text-align:center;color:#64748b;font-size:12px;padding:14px}
+@media(max-width:760px){main{grid-template-columns:1fr;padding:8px}.panel{padding:12px}.tools{grid-template-columns:repeat(3,1fr)}.tool{min-height:74px;padding:7px 3px}.tool .emoji{font-size:24px}.viewport{min-height:390px}.ground{width:78%;height:280px;min-height:250px}.bottomgrid{grid-template-columns:1fr}.scenehead{align-items:flex-start;flex-direction:column}}
+@media(max-width:390px){.tools{grid-template-columns:repeat(2,1fr)}.viewport{min-height:360px}.ground{width:82%;height:245px;min-height:230px}}
+@media print{header,.tools,.actions,.no-print{display:none!important}main{display:block}.panel{box-shadow:none}.viewport{min-height:450px}}
+</style>
+</head>
+<body>
+<header>
+  <h1>🌱 Bandar Hijau 3D</h1>
+  <p>Simulator reka bentuk Pertanian Bandar · RBT Tahun 5 · PdPR</p>
+</header>
+<main>
+  <aside class="panel">
+    <h2>🧰 Pilih objek binaan</h2>
+    <p class="sub">Tekan satu objek, kemudian ketik kawasan kebun untuk meletakkannya. Pada komputer, objek juga boleh diseret.</p>
+    <div class="tools" id="tools">
+      <button class="tool active" data-type="bed"><span class="emoji">🪴</span>Kotak tanaman<small>Sayur / herba</small></button>
+      <button class="tool" data-type="pot"><span class="emoji">🌿</span>Pasu tanaman<small>Tanaman kecil</small></button>
+      <button class="tool" data-type="hydro"><span class="emoji">💧</span>Hidroponik<small>Tanpa tanah</small></button>
+      <button class="tool" data-type="rack"><span class="emoji">🪜</span>Rak menegak<small>Jimat ruang</small></button>
+      <button class="tool" data-type="greenhouse"><span class="emoji">🏡</span>Rumah hijau<small>Lindungi tanaman</small></button>
+      <button class="tool" data-type="path"><span class="emoji">🚶</span>Laluan kerja<small>Akses penjagaan</small></button>
+    </div>
+    <h2>🌾 Jenis tanaman</h2>
+    <select id="crop" aria-label="Pilih jenis tanaman">
+      <option value="🥬">Sawi / salad</option>
+      <option value="🌶️">Cili</option>
+      <option value="🍅">Tomato</option>
+      <option value="🌿">Herba</option>
+      <option value="🥒">Timun</option>
+      <option value="🌱">Anak benih</option>
+    </select>
+    <div class="actions">
+      <button class="action" id="rotate">↻ Putar pandangan</button>
+      <button class="action secondary" id="delete">⌫ Padam objek</button>
+      <button class="action secondary" id="clear">Kosongkan kebun</button>
+    </div>
+    <p class="sub" style="margin-top:10px">Petua: sediakan laluan untuk bergerak, letakkan tanaman yang perlukan cahaya di kawasan terbuka dan gunakan rak untuk menjimatkan ruang.</p>
+  </aside>
+
+  <section class="workspace">
+    <div class="panel">
+      <div class="scenehead"><h2>🏙️ Tapak pertanian bandar</h2><span class="pill" id="mode">Mod: Kotak tanaman</span></div>
+      <div class="viewport" id="viewport">
+        <div class="sun">☀️</div><div class="cloud">☁️</div>
+        <div class="ground" id="ground">
+          <div class="emptyhint" id="hint">Tapak kebun kosong.<br><b>Pilih objek</b> di panel, kemudian ketik tapak untuk mula membina.</div>
+        </div>
+      </div>
+      <div class="status">
+        <div class="stat">Objek dibina<b id="count">0</b></div>
+        <div class="stat">Jenis binaan<b id="types">0</b></div>
+        <div class="stat">Markah reka bentuk<b id="score">0/100</b></div>
+      </div>
+      <div class="actions no-print">
+        <button class="action" id="save">💾 Simpan reka bentuk</button>
+        <button class="action secondary" id="export">📷 Cetak / simpan PDF</button>
+      </div>
+    </div>
+    <div class="bottomgrid">
+      <div class="panel">
+        <h2>📋 Misi reka bentuk</h2>
+        <div class="checks">
+          <label><input type="checkbox" class="mission" value="bed"> Saya menyediakan kawasan tanaman.</label>
+          <label><input type="checkbox" class="mission" value="water"> Saya memilih sistem pengairan / hidroponik.</label>
+          <label><input type="checkbox" class="mission" value="space"> Saya menggunakan ruang secara bijak.</label>
+          <label><input type="checkbox" class="mission" value="path"> Saya menyediakan laluan penjagaan.</label>
+          <label><input type="checkbox" class="mission" value="green"> Saya memikirkan perlindungan atau kelestarian tanaman.</label>
+        </div>
+        <p class="sub">Lengkapkan misi berdasarkan reka bentuk yang kamu bina. Guru boleh menyemak tangkap layar dan penerangan.</p>
+      </div>
+      <div class="panel">
+        <h2>✍️ Penerangan murid</h2>
+        <label class="sub" for="student">Nama dan kelas</label>
+        <input id="student" placeholder="Contoh: Aisyah, 5 Bestari">
+        <label class="sub" for="explain" style="display:block;margin-top:8px">Terangkan reka bentuk kebun kamu</label>
+        <textarea id="explain" placeholder="Contoh: Saya menggunakan rak menegak kerana ruang rumah terhad. Saya memilih sawi dan menggunakan sistem hidroponik..."></textarea>
+        <div class="actions"><button class="action" id="finish">✅ Semak pencapaian</button></div>
+        <p id="result" class="sub" aria-live="polite"></p>
+      </div>
+    </div>
+  </section>
+</main>
+<footer>Bandar Hijau 3D · RBT Tahun 5 · Projek reka bentuk digital untuk PdPR</footer>
+<div class="toast" id="toast"></div>
+<script>
+const ground=document.getElementById('ground'), hint=document.getElementById('hint');
+const crop=document.getElementById('crop');
+let selectedType='bed', selectedObject=null, objects=[], rotation=0, dragObj=null, startX=0,startY=0;
+const labels={bed:'Kotak tanaman',pot:'Pasu tanaman',hydro:'Hidroponik',rack:'Rak menegak',greenhouse:'Rumah hijau',path:'Laluan kerja'};
+function toast(msg){const t=document.getElementById('toast');t.textContent=msg;t.style.display='block';clearTimeout(window.toastTimer);window.toastTimer=setTimeout(()=>t.style.display='none',2300)}
+document.querySelectorAll('.tool').forEach(b=>b.addEventListener('click',()=>{document.querySelectorAll('.tool').forEach(x=>x.classList.remove('active'));b.classList.add('active');selectedType=b.dataset.type;document.getElementById('mode').textContent='Mod: '+labels[selectedType];selectedObject=null;document.querySelectorAll('.garden-object').forEach(x=>x.classList.remove('selected'))}));
+function makeObj(type,x,y,emoji){
+ const el=document.createElement('div');el.className='garden-object '+type;el.dataset.type=type;
+ if(type==='bed'){el.innerHTML='<span class="plant">'+emoji+'</span>'}
+ if(type==='pot'){el.innerHTML='<span>'+emoji+'</span>'}
+ if(type==='hydro'){el.innerHTML='<span></span><span></span><span></span><span></span>'}
+ if(type==='rack'){el.innerHTML='<span>'+emoji+'</span><span>'+emoji+'</span><span>'+emoji+'</span>'}
+ if(type==='greenhouse'){el.innerHTML='<span>🌱</span>'}
+ if(type==='path'){el.innerHTML='';}
+ const label=document.createElement('span');label.className='object-label';label.textContent=labels[type];el.appendChild(label);
+ el.style.left=x+'%';el.style.top=y+'%';el.dataset.x=x;el.dataset.y=y;el.dataset.emoji=emoji;
+ el.addEventListener('click',e=>{e.stopPropagation();selectObj(el)});
+ el.addEventListener('pointerdown',e=>{if(e.pointerType==='mouse'){dragObj=el;startX=e.clientX;startY=e.clientY;el.setPointerCapture?.(e.pointerId)}});
+ el.addEventListener('pointerup',e=>{if(dragObj===el && e.pointerType==='mouse'){const dx=e.clientX-startX,dy=e.clientY-startY;if(Math.abs(dx)+Math.abs(dy)>8){const r=ground.getBoundingClientRect();let nx=(parseFloat(el.dataset.x)+dx/r.width*100),ny=(parseFloat(el.dataset.y)+dy/r.height*100);setPos(el,Math.max(8,Math.min(92,nx)),Math.max(8,Math.min(92,ny)));}dragObj=null;}});
+ ground.appendChild(el);objects.push(el);hint.style.display='none';updateStats();return el;
+}
+function selectObj(el){document.querySelectorAll('.garden-object').forEach(x=>x.classList.remove('selected'));selectedObject=el;el.classList.add('selected');toast(labels[el.dataset.type]+' dipilih. Tekan Padam objek untuk membuangnya.')}
+function setPos(el,x,y){el.style.left=x+'%';el.style.top=y+'%';el.dataset.x=x;el.dataset.y=y}
+ground.addEventListener('click',e=>{if(e.target!==ground && !e.target.classList.contains('emptyhint'))return;const r=ground.getBoundingClientRect();const x=Math.max(8,Math.min(92,(e.clientX-r.left)/r.width*100));const y=Math.max(8,Math.min(92,(e.clientY-r.top)/r.height*100));makeObj(selectedType,x,y,crop.value)});
+document.getElementById('delete').addEventListener('click',()=>{if(!selectedObject){toast('Pilih objek di tapak dahulu.');return}objects=objects.filter(x=>x!==selectedObject);selectedObject.remove();selectedObject=null;hint.style.display=objects.length?'none':'block';updateStats();toast('Objek dipadam.')});
+document.getElementById('clear').addEventListener('click',()=>{if(!confirm('Kosongkan semua objek dalam kebun?'))return;objects.forEach(x=>x.remove());objects=[];selectedObject=null;hint.style.display='block';updateStats()});
+document.getElementById('rotate').addEventListener('click',()=>{rotation=(rotation+90)%360;ground.style.transform=`translate(-50%,-50%) rotateX(55deg) rotateZ(${45+rotation}deg)`;toast('Pandangan diputar. Ketik sekali lagi untuk sudut lain.')});
+function updateStats(){document.getElementById('count').textContent=objects.length;document.getElementById('types').textContent=new Set(objects.map(o=>o.dataset.type)).size;let s=0;const types=new Set(objects.map(o=>o.dataset.type));if(types.has('bed'))s+=20;if(types.has('hydro'))s+=20;if(types.has('rack'))s+=20;if(types.has('path'))s+=20;if(types.has('greenhouse')||types.has('pot'))s+=20;document.getElementById('score').textContent=s+'/100'}
+document.getElementById('save').addEventListener('click',()=>{const data={title:'Bandar Hijau 3D',student:document.getElementById('student').value,explanation:document.getElementById('explain').value,objects:objects.map(o=>({type:o.dataset.type,x:o.dataset.x,y:o.dataset.y,emoji:o.dataset.emoji})),missions:[...document.querySelectorAll('.mission')].map(x=>({id:x.value,checked:x.checked})),savedAt:new Date().toISOString()};const blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='reka-bentuk-bandar-hijau.json';a.click();URL.revokeObjectURL(a.href);toast('Fail reka bentuk dimuat turun. Hantar bersama tangkap layar kepada guru.')});
+document.getElementById('export').addEventListener('click',()=>window.print());
+document.getElementById('finish').addEventListener('click',()=>{const checks=[...document.querySelectorAll('.mission')].filter(x=>x.checked).length;const types=new Set(objects.map(o=>o.dataset.type));let score=Math.round(checks/5*60+Math.min(objects.length,6)/6*20+Math.min(types.size,4)/4*20);const result=document.getElementById('result');result.innerHTML=`<b>Pencapaian: ${score}/100</b><br>Misi selesai: ${checks}/5 · Objek: ${objects.length} · Jenis binaan: ${types.size}<br>${score>=80?'Hebat! Reka bentuk kamu menunjukkan perancangan yang baik.':score>=50?'Bagus! Tambah baik kebun dengan melengkapkan misi yang belum selesai.':'Teruskan membina. Lengkapkan misi dan cuba gunakan ruang dengan lebih bijak.'}`;toast('Semakan selesai!')});
+</script>
+</body>
+</html>
