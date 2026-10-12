@@ -1,22 +1,18 @@
-BANDAR HIJAU 3D — RBT TAHUN 5
-Versi prototaip interaktif untuk telefon dan komputer.
+BANDAR HIJAU 3D — KEMAS KINI
+- Kawasan tapak binaan dan kawalan reka bentuk di bahagian atas.
+- Katalog aset dipindahkan ke bawah bahagian tapak.
+- Misi pembelajaran, maklumat murid dan penerangan diletakkan selepas katalog aset.
+- Ganjaran berdasarkan bilangan jenis item yang berbeza:
+  * 6 jenis item atau lebih: Medal Emas + popup CEMERLANG
+  * 3 hingga 5 jenis item: Medal Perak + popup SYABAS
+  * 1 hingga 2 jenis item: Medal Gangsa + popup USAHA YANG BAIK
+  * 0 jenis item: minta murid mula membina dahulu
+- Item SVG isometrik, letak/seret/putar/salin/padam, kamera/zoom, simpan lokal, eksport/import JSON dan cetak/PDF.
 
-Ciri:
-- Katalog item dengan tab Semua, Tanaman, Struktur dan Alatan.
-- Aset isometrik SVG yang dilukis menggunakan muka atas dan sisi 3D.
-- Letak item dengan ketik pada tapak.
-- Seret item untuk alih; pilih, putar, salin dan padam.
-- Putar kamera, zum masuk/keluar, mod binaan dan mod pandangan.
-- Simpan pada peranti, eksport/import fail JSON, cetak/simpan PDF.
-- Misi reka bentuk dan skor pencapaian.
-- Mesra skrin telefon.
-
-GitHub Pages:
+Cara GitHub Pages:
 1. Ekstrak ZIP.
-2. Muat naik index.html ke root repository GitHub.
+2. Muat naik index.html ke root repository.
 3. Settings > Pages > Deploy from a branch > main > /(root) > Save.
-4. Buka URL Pages yang dijana.
+4. Refresh pautan Pages untuk melihat versi baharu.
 
-Nota:
-Ini prototaip isometrik 2.5D menggunakan aset SVG buatan sendiri, bukan enjin 3D sebenar/WebGL. Ia menyokong susun atur dan manipulasi objek pada tapak.
-Reka bentuk tidak dihantar automatik ke guru; murid eksport JSON atau cetak/simpan PDF dan hantar ke Google Classroom.
+Nota: Rekod murid disimpan secara setempat atau dieksport oleh murid. Tiada papan pemuka guru atau pangkalan data awan dalam versi ini.
